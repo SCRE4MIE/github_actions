@@ -1,0 +1,29 @@
+services:
+  database:
+    image: postgres
+    container_name: postgres-database
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    env_file:
+      - envs/database.env
+
+  backend:
+    container_name: django-app
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/code
+      - /${STATIC_VOLUME_PATH}
+      - /${MEDIA_VOLUME_PATH}
+    env_file:
+      - .env
+    ports:
+      - 8000:8000
+    expose:
+      - 8000
+    depends_on:
+      - database
+
+volumes:
+  postgres_data:
