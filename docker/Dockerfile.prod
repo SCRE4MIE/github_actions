@@ -9,10 +9,8 @@ RUN mkdir apps_static
 RUN mkdir media
 
 COPY requirements.txt ./
+COPY requirements-prod.txt ./
 
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements-prod.txt
 
 COPY . ./
-
-CMD sh -c "python manage.py runserver 0.0.0.0:${PORT}"
-

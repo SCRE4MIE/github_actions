@@ -11,19 +11,20 @@ services:
     container_name: django-app
     build:
       context: ./
-      dockerfile: Dockerfile
+      dockerfile: docker/Dockerfile.dev
     volumes:
       - ./:/code
       - /${STATIC_VOLUME_PATH}
       - /${MEDIA_VOLUME_PATH}
     env_file:
-      - .env
+      - envs/.env.dev
     ports:
       - 8000:8000
     expose:
       - 8000
     depends_on:
       - database
+    command: python manage.py runserver 0.0.0.0:${PORT}
 
 volumes:
   postgres_data:
